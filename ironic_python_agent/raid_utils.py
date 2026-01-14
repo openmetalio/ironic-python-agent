@@ -28,7 +28,7 @@ LOG = logging.getLogger(__name__)
 
 # NOTE(dtantsur): 550 MiB is used by DIB and seems a common guidance:
 # https://www.rodsbooks.com/efi-bootloaders/principles.html
-ESP_SIZE_MIB = 550
+ESP_SIZE_MIB = 1025
 
 # NOTE(rpittau) The partition number used to create a raid device.
 # Could be changed to variable if we ever decide, for example to create

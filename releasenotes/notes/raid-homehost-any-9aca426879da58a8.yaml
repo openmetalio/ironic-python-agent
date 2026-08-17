@@ -1,0 +1,9 @@
+---
+fixes:
+  - |
+    Software RAID arrays are now created with ``--homehost=any``. Previously
+    the array name was stamped with the ramdisk hostname, so the deployed
+    instance saw the array as foreign and either assembled it under an
+    unexpected name (such as ``/dev/md127``) or skipped the
+    ``mdadm-last-resort`` recovery path entirely, which could leave the
+    instance unable to boot from the array.

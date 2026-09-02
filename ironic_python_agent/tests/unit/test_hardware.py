@@ -4277,10 +4277,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
 
         self.assertEqual(raid_config, result)
@@ -4445,11 +4447,13 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 3, '/dev/sda1', '/dev/sdb1',
                       '/dev/sdc1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '5', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '5', '--name', 'md1',
                       '--raid-devices', 3, '/dev/sda2', '/dev/sdb2',
                       '/dev/sdc2')])
         self.assertEqual(raid_config, result)
@@ -4563,11 +4567,13 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 4, '/dev/sda1', '/dev/sdb1',
                       '/dev/sdc1', '/dev/sdd1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '6', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '6', '--name', 'md1',
                       '--raid-devices', 4, '/dev/sda2', '/dev/sdb2',
                       '/dev/sdc2', '/dev/sdd2')])
         self.assertEqual(raid_config, result)
@@ -4626,12 +4632,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
             mock.call('parted', '/dev/sda', '-s', '--', 'mklabel', 'gpt'),
             mock.call('parted', '/dev/sdb', '-s', '--', 'mklabel', 'gpt'),
             mock.call('parted', '/dev/sda', '-s', '-a', 'optimal', '--',
-                      'mkpart', 'primary', '551MiB', '10GiB'),
+                      'mkpart', 'primary', '1026MiB', '10GiB'),
             mock.call('partx', '-av', '/dev/sda', attempts=3,
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('parted', '/dev/sdb', '-s', '-a', 'optimal', '--',
-                      'mkpart', 'primary', '551MiB', '10GiB'),
+                      'mkpart', 'primary', '1026MiB', '10GiB'),
             mock.call('partx', '-av', '/dev/sdb', attempts=3,
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
@@ -4646,10 +4652,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
         self.assertEqual(raid_config, result)
 
@@ -4733,10 +4741,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
         self.assertEqual(raid_config, result)
 
@@ -4815,10 +4825,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
         self.assertEqual(raid_config, result)
 
@@ -4899,10 +4911,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
         self.assertEqual(raid_config, result)
 
@@ -4992,10 +5006,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
         self.assertEqual(raid_config, result)
 
@@ -5098,10 +5114,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/sdc1', '/dev/sdd1')])
         self.assertEqual(raid_config, result)
 
@@ -5206,7 +5224,8 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'root',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'root',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1')])
         self.assertEqual(raid_config, result)
 
@@ -5559,12 +5578,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
             mock.call('parted', '/dev/nvme1n1', '-s', '--', 'mklabel',
                       'gpt'),
             mock.call('parted', '/dev/nvme0n1', '-s', '-a', 'optimal', '--',
-                      'mkpart', 'primary', '551MiB', '10GiB'),
+                      'mkpart', 'primary', '1026MiB', '10GiB'),
             mock.call('partx', '-av', '/dev/nvme0n1', attempts=3,
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('parted', '/dev/nvme1n1', '-s', '-a', 'optimal', '--',
-                      'mkpart', 'primary', '551MiB', '10GiB'),
+                      'mkpart', 'primary', '1026MiB', '10GiB'),
             mock.call('partx', '-av', '/dev/nvme1n1', attempts=3,
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
@@ -5579,11 +5598,13 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 2, '/dev/nvme0n1p1',
                       '/dev/nvme1n1p1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'md1',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'md1',
                       '--raid-devices', 2, '/dev/nvme0n1p2', '/dev/nvme1n1p2')
         ])
         self.assertEqual(raid_config, result)
@@ -5738,7 +5759,8 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'small',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'small',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1')])
         self.assertEqual(raid_config, result)
 
@@ -6001,7 +6023,8 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'new_volume',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'new_volume',
                       '--raid-devices', 2, '/dev/sdc1', '/dev/sdd1')
         ])
         self.assertEqual(raid_config, result)
@@ -6146,10 +6169,12 @@ class TestGenericHardwareManager(base.IronicAgentTest):
                       delay_on_retry=True),
             mock.call('udevadm', 'settle'),
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'small',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'small',
                       '--raid-devices', 2, '/dev/sda1', '/dev/sdb1'),
             mock.call('mdadm', '--create', '/dev/md1', '--force', '--run',
-                      '--metadata=1', '--level', '0', '--name', 'large',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '0', '--name', 'large',
                       '--raid-devices', 2, '/dev/sda2', '/dev/sdb2')])
 
         self.assertEqual(raid_config, result)

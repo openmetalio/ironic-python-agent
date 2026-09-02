@@ -56,7 +56,8 @@ class TestRaidUtils(base.IronicAgentTest):
 
         mock_execute.assert_called_once_with(
             'mdadm', '--create', '/dev/md0', '--force', '--run',
-            '--metadata=1', '--level', '1', '--name', 'md0',
+            '--metadata=1', '--homehost=any',
+            '--level', '1', '--name', 'md0',
             '--raid-devices', 3, '/dev/sda1', '/dev/sdb1', '/dev/sdc1')
 
     @mock.patch.object(raid_utils, '_get_actual_component_devices',
@@ -77,7 +78,8 @@ class TestRaidUtils(base.IronicAgentTest):
 
         mock_execute.assert_called_once_with(
             'mdadm', '--create', '/dev/md0', '--force', '--run',
-            '--metadata=1', '--level', '1', '--name', 'diskname',
+            '--metadata=1', '--homehost=any',
+            '--level', '1', '--name', 'diskname',
             '--raid-devices', 3, '/dev/sda1', '/dev/sdb1', '/dev/sdc1')
 
     @mock.patch.object(raid_utils, '_get_actual_component_devices',
@@ -96,7 +98,8 @@ class TestRaidUtils(base.IronicAgentTest):
 
         expected_calls = [
             mock.call('mdadm', '--create', '/dev/md0', '--force', '--run',
-                      '--metadata=1', '--level', '1', '--name', 'md0',
+                      '--metadata=1', '--homehost=any',
+                      '--level', '1', '--name', 'md0',
                       '--raid-devices', 3, '/dev/sda1', '/dev/sdb1',
                       '/dev/sdc1'),
             mock.call('mdadm', '--add', '/dev/md0', '/dev/sdb1',
@@ -123,7 +126,8 @@ class TestRaidUtils(base.IronicAgentTest):
 
         mock_execute.assert_called_once_with(
             'mdadm', '--create', '/dev/md0', '--force', '--run',
-            '--metadata=1', '--level', '1', '--name', 'md0',
+            '--metadata=1', '--homehost=any',
+            '--level', '1', '--name', 'md0',
             '--raid-devices', 3, '/dev/sda2', '/dev/sdb3', '/dev/sdc1')
         self.assertEqual(
             {'/dev/sda': 2, '/dev/sdb': 3, '/dev/sdc': 1}, indices)
@@ -217,21 +221,22 @@ class TestRaidUtils(base.IronicAgentTest):
         mock_efi_part.assert_called_once_with('/dev/md0')
         expected = [
             mock.call('sgdisk', '-F', '/dev/sda'),
-            mock.call('sgdisk', '-n', '0:451s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:451s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-0', '/dev/sda'),
             mock.call('partprobe'),
             mock.call('blkid'),
             mock.call('blkid', '-l', '-t', 'PARTLABEL=uefi-holder-0',
                       '/dev/sda'),
             mock.call('sgdisk', '-F', '/dev/sdb'),
-            mock.call('sgdisk', '-n', '0:452s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:452s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-1', '/dev/sdb'),
             mock.call('partprobe'),
             mock.call('blkid'),
             mock.call('blkid', '-l', '-t', 'PARTLABEL=uefi-holder-1',
                       '/dev/sdb'),
             mock.call('mdadm', '--create', '/dev/md42', '--force', '--run',
-                      '--metadata=1.0', '--level', '1', '--name', 'esp',
+                      '--metadata=1.0', '--homehost=any',
+                      '--level', '1', '--name', 'esp',
                       '--raid-devices', 2, '/dev/sda12', '/dev/sdb14'),
             mock.call('cp', '/dev/md0p12', '/dev/md42'),
             mock.call('wipefs', '-a', '/dev/md0p12')
@@ -274,14 +279,14 @@ class TestRaidUtils(base.IronicAgentTest):
         mock_efi_part.assert_called_once_with('/dev/md0')
         expected = [
             mock.call('sgdisk', '-F', '/dev/sda'),
-            mock.call('sgdisk', '-n', '0:451s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:451s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-0', '/dev/sda'),
             mock.call('partprobe'),
             mock.call('blkid'),
             mock.call('blkid', '-l', '-t', 'PARTLABEL=uefi-holder-0',
                       '/dev/sda'),
             mock.call('sgdisk', '-F', '/dev/sdb'),
-            mock.call('sgdisk', '-n', '0:452s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:452s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-1', '/dev/sdb'),
             mock.call('partprobe'),
             mock.call('blkid'),
@@ -327,21 +332,22 @@ class TestRaidUtils(base.IronicAgentTest):
 
         expected = [
             mock.call('sgdisk', '-F', '/dev/sda'),
-            mock.call('sgdisk', '-n', '0:451s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:451s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-0', '/dev/sda'),
             mock.call('partprobe'),
             mock.call('blkid'),
             mock.call('blkid', '-l', '-t', 'PARTLABEL=uefi-holder-0',
                       '/dev/sda'),
             mock.call('sgdisk', '-F', '/dev/sdb'),
-            mock.call('sgdisk', '-n', '0:452s:+550MiB', '-t', '0:ef00', '-c',
+            mock.call('sgdisk', '-n', '0:452s:+1025MiB', '-t', '0:ef00', '-c',
                       '0:uefi-holder-1', '/dev/sdb'),
             mock.call('partprobe'),
             mock.call('blkid'),
             mock.call('blkid', '-l', '-t', 'PARTLABEL=uefi-holder-1',
                       '/dev/sdb'),
             mock.call('mdadm', '--create', '/dev/md42', '--force', '--run',
-                      '--metadata=1.0', '--level', '1', '--name', 'esp',
+                      '--metadata=1.0', '--homehost=any',
+                      '--level', '1', '--name', 'esp',
                       '--raid-devices', 2, '/dev/sda12', '/dev/sdb14'),
             mock.call('cp', '/dev/md0p15', '/dev/md42'),
             mock.call('wipefs', '-a', '/dev/md0p15')

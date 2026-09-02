@@ -241,9 +241,10 @@ def create_raid_device(index, logical_disk, indices=None):
                   {'dev': md_device, 'name': volume_name,
                    'comp': component_devices})
         utils.execute('mdadm', '--create', md_device, '--force',
-                      '--run', '--metadata=1', '--level', raid_level,
-                      '--name', volume_name, '--raid-devices',
-                      len(component_devices), *component_devices)
+                      '--run', '--metadata=1', '--homehost=any',
+                      '--level', raid_level, '--name', volume_name,
+                      '--raid-devices', len(component_devices),
+                      *component_devices)
 
     except processutils.ProcessExecutionError as e:
         msg = "Failed to create md device {} on {}: {}".format(
@@ -404,9 +405,9 @@ def prepare_boot_partitions_for_softraid(device, holders, efi_part,
                       {'md_device': md_device,
                        'efi_partitions': efi_partitions})
             utils.execute('mdadm', '--create', md_device, '--force',
-                          '--run', '--metadata=1.0', '--level', '1',
-                          '--name', 'esp', '--raid-devices',
-                          len(efi_partitions),
+                          '--run', '--metadata=1.0', '--homehost=any',
+                          '--level', '1', '--name', 'esp',
+                          '--raid-devices', len(efi_partitions),
                           *efi_partitions)
 
             disk_utils.trigger_device_rescan(md_device)
